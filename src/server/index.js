@@ -13,10 +13,6 @@ import { User } from './models';
 
 app.use(bodyParser());
 
-router.get('/', function *(next) {
-  this.body = 'ohcE';
-});
-
 router.use(function *(next) {
   if (!this.request.headers.alias) {
     yield next;
@@ -27,6 +23,10 @@ router.use(function *(next) {
     this.user = me;
   }
   yield next;
+});
+
+router.get('/', function *(next) {
+  this.body = 'ohcE';
 });
 
 router.get('/me', function *(next) {
@@ -54,5 +54,5 @@ const server = app.listen(8000, () => {
   const host = server.address().address;
   const port = server.address().port;
 
-  console.log(`"Articles" listening at http://${host}:${port}`);
+  console.log(`"ArticlesAPI" listening at http://${host}:${port}`);
 });
