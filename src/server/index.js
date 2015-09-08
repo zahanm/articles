@@ -1,8 +1,8 @@
 
 'use strict';
 
-const bodyParser = require('koa-bodyparser');
 const koa = require('koa');
+const bodyParser = require('koa-bodyparser');
 const router = require('koa-router')();
 const mongoose = require('mongoose');
 
@@ -25,8 +25,7 @@ router.get('/me', function *(next) {
 router.post('/me', function *(next) {
   const reqAlias = this.request.body.alias;
   if (!reqAlias || /^\s*$/.exec(reqAlias)) {
-    res.status(400).json({ err: `need a valid alias: ${reqAlias}` });
-    return;
+    this.throw(`need a valid alias: "${reqAlias}"`, 400);
   }
   let me = yield User.findOne({ 'alias': reqAlias }).exec();
   if (!me) {
