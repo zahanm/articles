@@ -15,4 +15,5 @@ export const Link = mongoose.model('Link', new Schema({
 export const Thread = mongoose.model('Thread', new Schema({
   participants: [{ type: Schema.Types.ObjectId, ref: 'User', index: true }],
   contents: [{ type: Schema.Types.ObjectId, ref: 'Link' }],
+  name: String,
 }));

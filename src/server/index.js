@@ -9,7 +9,8 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/articles');
 const app = koa();
 
-import { User } from './models';
+import { User, Thread } from './models';
+import { nonEmptyString } from './utils';
 
 app.use(bodyParser());
 
@@ -34,18 +35,33 @@ router.get('/me', function *(next) {
 });
 
 router.post('/me', function *(next) {
-  const reqAlias = this.request.headers.alias;
-  if (!reqAlias || /^\s*$/.exec(reqAlias)) {
-    this.throw(`need a valid alias: "${reqAlias}"`, 400);
-  }
+  this.assert(nonEmptyString(this.request.headers.alias), 400, 'need an alias');
   if (!this.user) {
     this.user = new User({
-      alias: reqAlias,
+      alias: this.request.headers.alias,
     });
     yield this.user.save();
     this.status = 201;
   }
   this.body = this.user;
+});
+
+router.get('/threads', function *(next) {
+  this.assert(this.user, 401, 'need to be authenticated');
+  const threads = yield Thread.find({ participants: this.user }).exec();
+  this.body = threads;
+});
+
+router.post('/thread', function *(next) {
+  this.assert(this.user, 401, 'need to be authenticated');
+  this.assert(nonEmptyString(this.request.body.name), 400, 'need a name');
+  const t = new Thread({
+    participants: [ this.user ].concat(this.request.body.others || []),
+    name: this.request.body.name,
+  });
+  yield t.save();
+  this.status = 201;
+  this.body = t;
 });
 
 app.use(router.routes());
