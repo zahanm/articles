@@ -20,7 +20,9 @@ app.get('/', (req, res) => {
 app.route('/me')
   .get((req, res) => {
     co(function* () {
-      const me = yield models.User.findOne({ 'id': req.headers.alias }).exec();
+      const me = yield models.User.findOne(
+        { 'alias': req.headers.alias }
+      ).exec();
       res.json(me);
     });
   })
@@ -29,11 +31,18 @@ app.route('/me')
       if (!req.body.alias || /^\s*$/.exec(req.body.alias)) {
         res.status(400).json({ msg: `need a valid alias: ${req.body.alias}` });
       }
-      const me = new models.User({
+      let me = yield models.User.findOne(
+        { 'alias': req.body.alias }
+      ).exec();
+      if (me) {
+        res.json(me);
+        return;
+      }
+      me = new models.User({
         alias: req.body.alias,
       });
       yield me.save();
-      res.json(me);
+      res.status(201).json(me);
     });
   });
 
