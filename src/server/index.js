@@ -17,25 +17,35 @@ router.get('/', function *(next) {
   this.body = 'ohcE';
 });
 
-router.get('/me', function *(next) {
+router.use(function *(next) {
+  if (!this.request.headers.alias) {
+    yield next;
+    return;
+  }
   const me = yield User.findOne({ 'alias': this.request.headers.alias }).exec();
-  this.body = me;
+  if (me) {
+    this.user = me;
+  }
+  yield next;
+});
+
+router.get('/me', function *(next) {
+  this.body = this.user;
 });
 
 router.post('/me', function *(next) {
-  const reqAlias = this.request.body.alias;
+  const reqAlias = this.request.headers.alias;
   if (!reqAlias || /^\s*$/.exec(reqAlias)) {
     this.throw(`need a valid alias: "${reqAlias}"`, 400);
   }
-  let me = yield User.findOne({ 'alias': reqAlias }).exec();
-  if (!me) {
-    me = new User({
+  if (!this.user) {
+    this.user = new User({
       alias: reqAlias,
     });
-    yield me.save();
+    yield this.user.save();
     this.status = 201;
   }
-  this.body = me;
+  this.body = this.user;
 });
 
 app.use(router.routes());
