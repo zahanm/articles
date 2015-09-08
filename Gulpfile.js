@@ -4,7 +4,11 @@ var babel = require('gulp-babel');
 
 gulp.task('babel', function () {
   return gulp.src('src/**/*.js')
-    .pipe(babel())
+    .pipe(babel({
+      whitelist: [
+        // only things not supported by io.js
+      ]
+    }))
     .pipe(gulp.dest('dist'));
 });
 
