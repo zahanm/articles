@@ -9,7 +9,7 @@ const spawn = childProcess.spawn;
 const execFileSync = childProcess.execFileSync;
 
 gulp.task('babel', function () {
-  return gulp.src('src/**/*.js')
+  return gulp.src('src/server/**/*.js')
     .pipe(babel({
       whitelist: [
         // only things not supported by io.js
@@ -19,7 +19,7 @@ gulp.task('babel', function () {
         'es6.destructuring',
       ]
     }))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist/server/'));
 });
 
 let server = null;
@@ -39,5 +39,5 @@ gulp.task('drop', function () {
 });
 
 gulp.task('default', ['server'], function() {
-  gulp.watch('src/**/*.js', ['babel', 'server']);
+  gulp.watch('src/server/**/*.js', ['babel', 'server']);
 });

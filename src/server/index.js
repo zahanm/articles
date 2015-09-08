@@ -54,7 +54,6 @@ router.get('/threads', function *(next) {
 
 router.post('/thread', function *(next) {
   this.assert(this.user, 401, 'need to be authenticated');
-  this.assert(nonEmptyString(this.request.body.name), 400, 'need a name');
   const t = new Thread({
     participants: [ this.user ].concat(this.request.body.others || []),
     name: this.request.body.name,
