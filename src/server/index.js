@@ -1,16 +1,18 @@
 
 'use strict';
 
-let express = require('express');
-let app = express();
+const express = require('express');
+const app = express();
+
+import * as models from "./models";
 
 app.get('/', (req, res) => {
-  res.send('Hello World out there!');
+  res.send('ohcE');
 });
 
-var server = app.listen(8000, () => {
-  var host = server.address().address;
-  var port = server.address().port;
+const server = app.listen(8000, () => {
+  const host = server.address().address;
+  const port = server.address().port;
 
-  console.log(`Example app listening at http://${host}:${port}`);
+  console.log(`"Articles" listening at http://${host}:${port}`);
 });

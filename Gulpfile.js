@@ -7,7 +7,10 @@ gulp.task('babel', function () {
     .pipe(babel({
       whitelist: [
         // only things not supported by io.js
+        'strict',
         'es6.arrowFunctions',
+        'es6.modules',
+        'es6.destructuring',
       ]
     }))
     .pipe(gulp.dest('dist'));
