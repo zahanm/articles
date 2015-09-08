@@ -5,11 +5,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 export const User = mongoose.model('User', new Schema({
-  id: { type: String, index: true },
+  alias: { type: String, index: true, required: true },
 }));
 
 export const Link = mongoose.model('Link', new Schema({
-  url: { type: String, index: true },
+  url: { type: String, index: true, required: true },
 }));
 
 export const Thread = mongoose.model('Thread', new Schema({
