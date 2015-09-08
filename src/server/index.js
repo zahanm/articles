@@ -1,47 +1,45 @@
 
 'use strict';
 
-const bodyParser = require('body-parser');
-const co = require('co');
-const express = require('express');
+const bodyParser = require('koa-bodyparser');
+const koa = require('koa');
+const router = require('koa-router')();
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/articles');
-const app = express();
+const app = koa();
 
 import { User } from './models';
 
-app.use(bodyParser.json());
+app.use(bodyParser());
 
-app.get('/', (req, res) => {
-  res.send('ohcE');
+router.get('/', function *(next) {
+  this.body = 'ohcE';
 });
 
-app.route('/me')
-  .get((req, res) => {
-    co(function* () {
-      const me = yield User.findOne({ 'alias': req.headers.alias }).exec();
-      res.json(me);
-    }).catch((err) => { res.status(500).json({err: err.message }); });
-  })
-  .post((req, res) => {
-    co(function* () {
-      req.hh();
-      if (!req.body.alias || /^\s*$/.exec(req.body.alias)) {
-        res.status(400).json({ err: `need a valid alias: ${req.body.alias}` });
-        return;
-      }
-      let me = yield User.findOne({ 'alias': req.body.alias }).exec();
-      if (!me) {
-        me = new User({
-          alias: req.body.alias,
-        });
-        yield me.save();
-        res.status(201);
-      }
-      res.json(me);
-    }).catch((err) => { res.status(500).json({err: err.message }); });
-  });
+router.get('/me', function *(next) {
+  const me = yield User.findOne({ 'alias': this.request.headers.alias }).exec();
+  this.body = me;
+});
+
+router.post('/me', function *(next) {
+  const reqAlias = this.request.body.alias;
+  if (!reqAlias || /^\s*$/.exec(reqAlias)) {
+    res.status(400).json({ err: `need a valid alias: ${reqAlias}` });
+    return;
+  }
+  let me = yield User.findOne({ 'alias': reqAlias }).exec();
+  if (!me) {
+    me = new User({
+      alias: reqAlias,
+    });
+    yield me.save();
+    this.status = 201;
+  }
+  this.body = me;
+});
+
+app.use(router.routes());
 
 const server = app.listen(8000, () => {
   const host = server.address().address;
