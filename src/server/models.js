@@ -1,8 +1,18 @@
 
 'use strict';
 
-const { Schema } = require('mongoose');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-export const Kitten = new Schema({
-  name: String,
-});
+export const User = mongoose.model('User', new Schema({
+  id: { type: String, index: true },
+}));
+
+export const Link = mongoose.model('Link', new Schema({
+  url: { type: String, index: true },
+}));
+
+export const Thread = mongoose.model('Thread', new Schema({
+  participants: [{ type: Schema.Types.ObjectId, ref: 'User', index: true }],
+  contents: [{ type: Schema.Types.ObjectId, ref: 'Link' }],
+}));

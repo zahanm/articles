@@ -1,6 +1,10 @@
 
-var gulp = require('gulp');
-var babel = require('gulp-babel');
+'use strict';
+
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+
+const spawn = require('child_process').spawn;
 
 gulp.task('babel', function () {
   return gulp.src('src/**/*.js')
@@ -16,6 +20,14 @@ gulp.task('babel', function () {
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('watch', function() {
-  gulp.watch('src/**/*.js', ['babel']);
+let server = null;
+gulp.task('server', ['babel'], function () {
+  if (server !== null) {
+    server.kill();
+  }
+  server = spawn('node', ['dist/server/index.js'], { stdio: 'inherit' });
+});
+
+gulp.task('default', ['server'], function() {
+  gulp.watch('src/**/*.js', ['babel', 'server']);
 });
