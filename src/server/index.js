@@ -22,12 +22,13 @@ app.route('/me')
     co(function* () {
       const me = yield User.findOne({ 'alias': req.headers.alias }).exec();
       res.json(me);
-    });
+    }).catch((err) => { res.status(500).json({err: err.message }); });
   })
   .post((req, res) => {
     co(function* () {
+      req.hh();
       if (!req.body.alias || /^\s*$/.exec(req.body.alias)) {
-        res.status(400).json({ msg: `need a valid alias: ${req.body.alias}` });
+        res.status(400).json({ err: `need a valid alias: ${req.body.alias}` });
         return;
       }
       let me = yield User.findOne({ 'alias': req.body.alias }).exec();
@@ -39,7 +40,7 @@ app.route('/me')
         res.status(201);
       }
       res.json(me);
-    });
+    }).catch((err) => { res.status(500).json({err: err.message }); });
   });
 
 const server = app.listen(8000, () => {
