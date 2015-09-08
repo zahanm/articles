@@ -4,7 +4,9 @@
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 
-const spawn = require('child_process').spawn;
+const childProcess = require('child_process')
+const spawn = childProcess.spawn;
+const execFileSync = childProcess.execFileSync;
 
 gulp.task('babel', function () {
   return gulp.src('src/**/*.js')
@@ -26,6 +28,14 @@ gulp.task('server', ['babel'], function () {
     server.kill();
   }
   server = spawn('node', ['dist/server/index.js'], { stdio: 'inherit' });
+});
+
+gulp.task('drop', function () {
+  execFileSync(
+    'mongo',
+    ['articles', '--eval', 'db.users.drop()'],
+    { stdio: 'inherit' }
+  );
 });
 
 gulp.task('default', ['server'], function() {
