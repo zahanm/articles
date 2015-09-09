@@ -1,7 +1,4 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
+
 'use strict';
 
 var React = require('react-native');
@@ -12,8 +9,9 @@ var {
   View,
 } = React;
 
-var ArticlesIOS = React.createClass({
-  render: function() {
+class ArticlesIOS extends React.Component {
+
+  render(): React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -24,7 +22,7 @@ var ArticlesIOS = React.createClass({
         </Text>
         <Text style={styles.instructions}>
           Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+          Cmd+D for dev menu
         </Text>
         <Text style={styles.instructions}>
           &copy; Zahan
@@ -32,7 +30,8 @@ var ArticlesIOS = React.createClass({
       </View>
     );
   }
-});
+
+}
 
 var styles = StyleSheet.create({
   container: {
