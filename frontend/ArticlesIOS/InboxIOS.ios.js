@@ -41,8 +41,11 @@ class InboxIOS extends Component {
     }
 
     return (
-      <View>
-        {content}
+      <View style={styles.inbox}>
+        <Text style={styles.compose}>new</Text>
+        <View style={styles.threadlist}>
+          {content}
+        </View>
       </View>
     );
   }
@@ -61,6 +64,19 @@ class InboxIOS extends Component {
 }
 
 var styles = StyleSheet.create({
+  inbox: {
+    flex: 1,
+  },
+  compose: {
+    alignSelf: 'flex-end',
+    marginTop: 20,
+    marginRight: 5,
+  },
+  threadlist: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
   loading: {
     color: '#333333',
   },

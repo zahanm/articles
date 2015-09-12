@@ -27,8 +27,6 @@ class ArticlesIOS extends Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
     backgroundColor: '#F5FCFF',
   },
 });
