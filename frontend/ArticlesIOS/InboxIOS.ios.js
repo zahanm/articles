@@ -3,6 +3,7 @@
 
 var React = require('react-native');
 var {
+  ActivityIndicatorIOS,
   Component,
   StyleSheet,
   Text,
@@ -25,27 +26,29 @@ class InboxIOS extends Component {
   render(): Component {
     let content = null;
     if (this.state.threads.length > 0) {
-      content = <ThreadsListIOS threads={this.state.threads} />;
+      content =
+        <ThreadsListIOS
+          style={styles.main}
+          threads={this.state.threads}
+        />;
     } else {
       if (this.state.badResponseStatus !== null) {
         content =
-          <Text style={styles.loading}>
-            Server responded with {this.state.badResponseStatus}
-          </Text>;
+          <View style={[styles.main, styles.cta]}>
+            <Text>Server responded with {this.state.badResponseStatus}</Text>
+          </View>;
       } else {
         content =
-          <Text style={styles.loading}>
-            Loading
-          </Text>;
+          <View style={[styles.main, styles.cta]}>
+            <ActivityIndicatorIOS animating={true} />
+          </View>;
       }
     }
 
     return (
       <View style={styles.inbox}>
         <Text style={styles.compose}>new</Text>
-        <View style={styles.threadlist}>
-          {content}
-        </View>
+        {content}
       </View>
     );
   }
@@ -72,14 +75,13 @@ var styles = StyleSheet.create({
     marginTop: 20,
     marginRight: 5,
   },
-  threadlist: {
+  main: {
     flex: 1,
+  },
+  cta: {
     justifyContent: 'center',
-    alignItems: 'flex-start',
-  },
-  loading: {
-    color: '#333333',
-  },
+    alignItems: 'center',
+  }
 });
 
 module.exports = InboxIOS;
