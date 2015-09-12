@@ -10,14 +10,14 @@ var {
   View,
 } = React;
 
-var ThreadsListIOS = require('./ThreadsListIOS.ios');
+var InboxIOS = require('./InboxIOS.ios');
 
 class ArticlesIOS extends Component {
 
   render(): Component {
     return (
       <View style={styles.container}>
-        <ThreadsListIOS />
+        <InboxIOS />
       </View>
     );
   }
