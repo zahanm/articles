@@ -1,8 +1,8 @@
 
 'use strict';
 
-var React = require('react-native');
-var {
+const React = require('react-native');
+const {
   Component,
   PropTypes,
   StyleSheet,
@@ -10,7 +10,7 @@ var {
   View,
 } = React;
 
-var APIConst = require('./APIConst');
+const APIConst = require('./APIConst');
 
 class ThreadsListIOS extends Component {
 
@@ -33,7 +33,7 @@ class ThreadsListIOS extends Component {
 
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   thread: {
     fontSize: 20,
     margin: 10,

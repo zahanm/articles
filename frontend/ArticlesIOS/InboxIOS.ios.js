@@ -1,8 +1,8 @@
 
 'use strict';
 
-var React = require('react-native');
-var {
+const React = require('react-native');
+const {
   ActivityIndicatorIOS,
   Component,
   StyleSheet,
@@ -11,8 +11,8 @@ var {
   View,
 } = React;
 
-var APIConst = require('./APIConst');
-var ThreadsListIOS = require('./ThreadsListIOS.ios');
+const APIConst = require('./APIConst');
+const ThreadsListIOS = require('./ThreadsListIOS.ios');
 
 /**
  * Fetches and shows all threads you are a participant in
@@ -81,7 +81,7 @@ class InboxIOS extends Component {
 
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   inbox: {
     flex: 1,
   },

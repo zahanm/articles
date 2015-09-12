@@ -1,8 +1,8 @@
 
 'use strict';
 
-var React = require('react-native');
-var {
+const React = require('react-native');
+const {
   AppRegistry,
   Component,
   StyleSheet,
@@ -10,7 +10,7 @@ var {
   View,
 } = React;
 
-var InboxIOS = require('./InboxIOS.ios');
+const InboxIOS = require('./InboxIOS.ios');
 
 class ArticlesIOS extends Component {
 
@@ -24,7 +24,7 @@ class ArticlesIOS extends Component {
 
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
