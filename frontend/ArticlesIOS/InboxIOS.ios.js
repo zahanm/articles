@@ -7,6 +7,7 @@ var {
   Component,
   StyleSheet,
   Text,
+  TouchableHighlight,
   View,
 } = React;
 
@@ -24,33 +25,47 @@ class InboxIOS extends Component {
   }
 
   render(): Component {
-    let content = null;
-    if (this.state.threads.length > 0) {
-      content =
-        <ThreadsListIOS
-          style={styles.main}
-          threads={this.state.threads}
-        />;
-    } else {
-      if (this.state.badResponseStatus !== null) {
-        content =
-          <View style={[styles.main, styles.cta]}>
-            <Text>Server responded with {this.state.badResponseStatus}</Text>
-          </View>;
-      } else {
-        content =
-          <View style={[styles.main, styles.cta]}>
-            <ActivityIndicatorIOS animating={true} />
-          </View>;
-      }
-    }
-
     return (
       <View style={styles.inbox}>
-        <Text style={styles.compose}>new</Text>
-        {content}
+        {this.renderCompose()}
+        {this.renderThreads()}
       </View>
     );
+  }
+
+  renderThreads(): Component {
+    if (this.state.threads.length === 0) {
+      if (this.state.badResponseStatus !== null) {
+        return (
+          <View style={[styles.main, styles.cta]}>
+            <Text>Server responded with {this.state.badResponseStatus}</Text>
+          </View>
+        );
+      }
+      return (
+        <View style={[styles.main, styles.cta]}>
+          <ActivityIndicatorIOS animating={true} />
+        </View>
+      );
+    }
+    return (
+      <ThreadsListIOS
+        style={styles.main}
+        threads={this.state.threads}
+      />
+    );
+  }
+
+  renderCompose(): Component {
+    return (
+      <TouchableHighlight onPress={this.createThread}>
+        <Text style={styles.compose}>new</Text>
+      </TouchableHighlight>
+    );
+  }
+
+  createThread = async () => {
+    console.log('make new thread');
   }
 
   async componentDidMount(): Promise<void> {
