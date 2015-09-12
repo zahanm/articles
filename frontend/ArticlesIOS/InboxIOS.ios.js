@@ -17,12 +17,9 @@ var ThreadsListIOS = require('./ThreadsListIOS.ios');
  */
 class InboxIOS extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      threads: [],
-      badResponseStatus: null,
-    };
+  state = {
+    threads: [],
+    badResponseStatus: null,
   }
 
   render(): Component {
@@ -50,17 +47,15 @@ class InboxIOS extends Component {
     );
   }
 
-  componentDidMount(): void {
-    fetch(`${APIConst.ENDPOINT}/threads`, { headers: APIConst.auth() })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          this.setState({ badResponseStatus: response.status });
-        }
-      })
-      .then((threads) => { this.setState({ threads }); })
-      .catch((err) => { throw err; });
+  async componentDidMount(): Promise<void> {
+    let response =
+      await fetch(`${APIConst.ENDPOINT}/threads`, { headers: APIConst.auth() });
+    if (!response.ok) {
+      this.setState({ badResponseStatus: response.status });
+      return;
+    }
+    let threads = await response.json();
+    this.setState({ threads });
   }
 
 }

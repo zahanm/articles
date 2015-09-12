@@ -1,0 +1,5 @@
+{
+  "whitelist": [
+    "es7.classProperties",
+  ]
+}

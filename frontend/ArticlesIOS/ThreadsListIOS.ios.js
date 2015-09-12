@@ -14,6 +14,10 @@ var APIConst = require('./APIConst');
 
 class ThreadsListIOS extends Component {
 
+  static propTypes = {
+    threads: PropTypes.array.isRequired
+  }
+
   render(): Component {
     // assert(this.props.threads.length > 0);
     return (
@@ -28,7 +32,6 @@ class ThreadsListIOS extends Component {
   }
 
 }
-ThreadsListIOS.propTypes = { threads: PropTypes.array.isRequired };
 
 var styles = StyleSheet.create({
   thread: {
