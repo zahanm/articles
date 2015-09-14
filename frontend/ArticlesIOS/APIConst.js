@@ -5,10 +5,11 @@ module.exports = {
 
   ENDPOINT: 'http://localhost:8000',
 
-  auth() {
-    const h = new Headers();
-    h.set('alias', 'zahanm');
-    return h;
+  authenticatedHeaders(): Headers {
+    const headers = new Headers();
+    headers.set('Accept', 'application/json');
+    headers.set('alias', 'zahanm');
+    return headers;
   },
 
 };

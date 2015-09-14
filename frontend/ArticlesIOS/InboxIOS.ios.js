@@ -7,6 +7,7 @@ const {
   Component,
   StyleSheet,
   Text,
+  TextInput,
   TouchableHighlight,
   View,
 } = React;
@@ -21,7 +22,8 @@ class InboxIOS extends Component {
 
   state = {
     threads: [],
-    badResponseStatus: null,
+    serverResponseStatus: null,
+    groupname: '',
   }
 
   render(): Component {
@@ -33,15 +35,32 @@ class InboxIOS extends Component {
     );
   }
 
+  renderCompose(): Component {
+    return (
+      <View style={styles.compose}>
+        <TextInput
+          style={{ flex: 1 }}
+          placeholder="Group Name"
+          onChangeText={(groupname) => this.setState({ groupname })}
+          value={this.state.groupname}
+        />
+        <TouchableHighlight onPress={this.createThread}>
+          <Text>new</Text>
+        </TouchableHighlight>
+      </View>
+    );
+  }
+
   renderThreads(): Component {
+    if (this.state.serverResponseStatus !== null) {
+      // early exit to show server status
+      return (
+        <View style={[styles.main, styles.cta]}>
+          <Text>Server responded with {this.state.serverResponseStatus}</Text>
+        </View>
+      );
+    }
     if (this.state.threads.length === 0) {
-      if (this.state.badResponseStatus !== null) {
-        return (
-          <View style={[styles.main, styles.cta]}>
-            <Text>Server responded with {this.state.badResponseStatus}</Text>
-          </View>
-        );
-      }
       return (
         <View style={[styles.main, styles.cta]}>
           <ActivityIndicatorIOS animating={true} />
@@ -56,23 +75,28 @@ class InboxIOS extends Component {
     );
   }
 
-  renderCompose(): Component {
-    return (
-      <TouchableHighlight onPress={this.createThread}>
-        <Text style={styles.compose}>new</Text>
-      </TouchableHighlight>
-    );
-  }
-
   createThread = async () => {
-    console.log('make new thread');
+    const name = this.state.groupname;
+    const headers = APIConst.authenticatedHeaders();
+    headers.set('Content-Type', 'application/json');
+    let response = await fetch(`${APIConst.ENDPOINT}/thread`, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({ name }),
+    });
+    if (!response.ok) {
+      this.setState({ serverResponseStatus: response.status });
+      return;
+    }
+    this.setState({ serverResponseStatus: response.status });
   }
 
   async componentDidMount(): Promise<void> {
-    let response =
-      await fetch(`${APIConst.ENDPOINT}/threads`, { headers: APIConst.auth() });
+    const response = await fetch(`${APIConst.ENDPOINT}/threads`, {
+      headers: APIConst.authenticatedHeaders(),
+    });
     if (!response.ok) {
-      this.setState({ badResponseStatus: response.status });
+      this.setState({ serverResponseStatus: response.status });
       return;
     }
     let threads = await response.json();
@@ -86,9 +110,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   compose: {
-    alignSelf: 'flex-end',
     marginTop: 20,
-    marginRight: 5,
+    paddingLeft: 10,
+    paddingRight: 10,
+    flexDirection: 'row',
   },
   main: {
     flex: 1,
