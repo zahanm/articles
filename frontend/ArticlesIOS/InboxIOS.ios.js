@@ -5,6 +5,8 @@ const React = require('react-native');
 const {
   ActivityIndicatorIOS,
   Component,
+  Navigator,
+  PropTypes,
   StyleSheet,
   Text,
   TextInput,
@@ -22,13 +24,15 @@ class InboxIOS extends Component {
 
   state = {
     threads: [],
-    serverResponseStatus: null,
-    groupname: '',
+  }
+
+  static propTypes = {
+    nav: PropTypes.instanceOf(Navigator).isRequired,
   }
 
   render(): Component {
     return (
-      <View style={styles.inbox}>
+      <View style={styles.fill}>
         {this.renderCompose()}
         {this.renderThreads()}
       </View>
@@ -37,14 +41,8 @@ class InboxIOS extends Component {
 
   renderCompose(): Component {
     return (
-      <View style={styles.compose}>
-        <TextInput
-          style={{ flex: 1 }}
-          placeholder="Group Name"
-          onChangeText={(groupname) => this.setState({ groupname })}
-          value={this.state.groupname}
-        />
-        <TouchableHighlight onPress={this.createThread}>
+      <View style={[styles.offsetFromTop, styles.row, styles.end]}>
+        <TouchableHighlight style={{ width: 30 }} onPress={this._goToCompose}>
           <Text>new</Text>
         </TouchableHighlight>
       </View>
@@ -52,43 +50,22 @@ class InboxIOS extends Component {
   }
 
   renderThreads(): Component {
-    if (this.state.serverResponseStatus !== null) {
-      // early exit to show server status
-      return (
-        <View style={[styles.main, styles.cta]}>
-          <Text>Server responded with {this.state.serverResponseStatus}</Text>
-        </View>
-      );
-    }
     if (this.state.threads.length === 0) {
       return (
-        <View style={[styles.main, styles.cta]}>
+        <View style={[styles.fill, styles.cta]}>
           <ActivityIndicatorIOS animating={true} />
         </View>
       );
     }
     return (
-      <ThreadsListIOS
-        style={styles.main}
-        threads={this.state.threads}
-      />
+      <View style={styles.fill}>
+        <ThreadsListIOS threads={this.state.threads} />
+      </View>
     );
   }
 
-  createThread = async () => {
-    const name = this.state.groupname;
-    const headers = APIConst.authenticatedHeaders();
-    headers.set('Content-Type', 'application/json');
-    const response = await fetch(`${APIConst.ENDPOINT}/thread`, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({ name }),
-    });
-    if (!response.ok) {
-      this.setState({ serverResponseStatus: response.status });
-      return;
-    }
-    this.setState({ serverResponseStatus: response.status });
+  _goToCompose = () => {
+    this.props.nav.push({ id: 'compose' });
   }
 
   async componentDidMount(): Promise<void> {
@@ -96,7 +73,7 @@ class InboxIOS extends Component {
       headers: APIConst.authenticatedHeaders(),
     });
     if (!response.ok) {
-      this.setState({ serverResponseStatus: response.status });
+      this.props.nav.push({ id: 'response', status: response.status });
       return;
     }
     let threads = await response.json();
@@ -106,22 +83,22 @@ class InboxIOS extends Component {
 }
 
 const styles = StyleSheet.create({
-  inbox: {
+  fill: {
     flex: 1,
   },
-  compose: {
+  offsetFromTop: {
     marginTop: 20,
-    paddingLeft: 10,
-    paddingRight: 10,
-    flexDirection: 'row',
   },
-  main: {
-    flex: 1,
+  row: {
+    flexDirection: 'row',
   },
   cta: {
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
+  end: {
+    justifyContent: 'flex-end',
+  },
 });
 
 module.exports = InboxIOS;

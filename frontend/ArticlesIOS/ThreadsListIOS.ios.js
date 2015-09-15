@@ -15,11 +15,10 @@ const APIConst = require('./APIConst');
 class ThreadsListIOS extends Component {
 
   static propTypes = {
-    threads: PropTypes.array.isRequired
+    threads: PropTypes.array.isRequired,
   }
 
   render(): Component {
-    // assert(this.props.threads.length > 0);
     return (
       <View>
         {this.props.threads.map((thread) =>
