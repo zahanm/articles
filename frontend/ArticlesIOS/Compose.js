@@ -27,7 +27,7 @@ class Compose extends Component {
 
   render(): Component {
     return (
-      <View style={styles.fill}>
+      <View>
         <TextInput
           style={[styles.bottomSpace, styles.padAround, styles.noEdge, {
             backgroundColor: '#eee',
@@ -67,9 +67,6 @@ class Compose extends Component {
 }
 
 const styles = StyleSheet.create({
-  fill: {
-    flex: 1,
-  },
   padAround: {
     padding: 5,
   },

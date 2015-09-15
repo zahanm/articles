@@ -20,7 +20,7 @@ class ServerResponse extends Component {
 
   render(): Component {
     return (
-      <View style={[styles.fill, styles.cta]}>
+      <View style={styles.cta}>
         <Text>Server responded with {this.props.status}</Text>
       </View>
     );
@@ -29,9 +29,6 @@ class ServerResponse extends Component {
 }
 
 const styles = StyleSheet.create({
-  fill: {
-    flex: 1,
-  },
   cta: {
     justifyContent: 'center',
     alignItems: 'center',

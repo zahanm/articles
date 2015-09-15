@@ -19,26 +19,17 @@ const ServerResponse = require('./ServerResponse.js');
 class ArticlesIOS extends Component {
 
   _renderScene = (route: object, navigator: Navigator) => {
-    console.log(route);
     let content = null;
     switch (route.id) {
       case 'inbox':
-        content = <Inbox nav={navigator} {...route} />;
-        break;
+        return <Inbox nav={navigator} {...route} />;
       case 'response':
-        content = <ServerResponse nav={navigator} {...route} />;
-        break;
+        return <ServerResponse nav={navigator} {...route} />;
       case 'compose':
-        content = <Compose nav={navigator} {...route} />;
-        break;
+        return <Compose nav={navigator} {...route} />;
       default:
         throw new Error('no scene given');
     }
-    return (
-      <View style={[styles.fill, styles.offsetFromTop]}>
-        {content}
-      </View>
-    );
   }
 
   _navBarRoutes = {
@@ -82,6 +73,7 @@ class ArticlesIOS extends Component {
           <Navigator.NavigationBar routeMapper={this._navBarRoutes} />
         }
         configureScene={(route) => Navigator.SceneConfigs.HorizontalSwipeJump}
+        sceneStyle={[styles.fill, styles.offsetFromTop]}
       />
     );
   }

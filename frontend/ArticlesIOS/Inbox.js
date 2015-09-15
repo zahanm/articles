@@ -32,7 +32,7 @@ class Inbox extends Component {
 
   render(): Component {
     return (
-      <View style={styles.fill}>
+      <View>
         {this._renderCompose()}
         {this._renderThreads()}
       </View>
