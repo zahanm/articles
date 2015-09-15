@@ -18,6 +18,21 @@ const ServerResponse = require('./ServerResponse.js');
 
 class ArticlesIOS extends Component {
 
+  render(): Component {
+    return (
+      <Navigator
+        initialRoute={{ id: 'inbox', title: 'Inbox' }}
+        renderScene={this._renderScene}
+        ref="nav"
+        navigationBar={
+          <Navigator.NavigationBar routeMapper={this._navBarRoutes} />
+        }
+        configureScene={(route) => Navigator.SceneConfigs.HorizontalSwipeJump}
+        sceneStyle={[styles.fill, styles.offsetFromTop]}
+      />
+    );
+  }
+
   _renderScene = (route: object, navigator: Navigator) => {
     let content = null;
     switch (route.id) {
@@ -38,44 +53,41 @@ class ArticlesIOS extends Component {
         // first scene
         return null;
       }
-      var previousRoute = navState.routeStack[index - 1];
+      var previous = navState.routeStack[index - 1];
       return (
         <TouchableOpacity onPress={() => navigator.pop()} >
-          <View style={{ paddingLeft: 10 }}>
-            <Text style={{ marginVertical: 10 }}>
-              {previousRoute.title}
-            </Text>
-          </View>
+          <Text style={[styles.vert10, { paddingLeft: 10 }]}>
+            {previous.title}
+          </Text>
         </TouchableOpacity>
       );
     },
 
-    RightButton: function(route, navigator, index, navState) {
-      // don't want one
+    RightButton: (route, navigator, index, navState) => {
+      const composeButton =
+        <TouchableOpacity
+          style={[styles.vert10, { paddingRight: 10 }]}
+          onPress={this._compose}
+        >
+          <Text>new</Text>
+        </TouchableOpacity>;
+      switch (route.id) {
+        case 'inbox': return composeButton;
+      }
       return null;
     },
 
-    Title: function(route, navigator, index, navState) {
+    Title: (route, navigator, index, navState) => {
       return (
-        <Text style={{ fontWeight: '500', marginVertical: 10 }}>
+        <Text style={[styles.vert10, { fontWeight: '500' }]}>
           {route.title}
         </Text>
       );
     },
   }
 
-  render(): Component {
-    return (
-      <Navigator
-        initialRoute={{ id: 'inbox', title: 'Inbox' }}
-        renderScene={this._renderScene}
-        navigationBar={
-          <Navigator.NavigationBar routeMapper={this._navBarRoutes} />
-        }
-        configureScene={(route) => Navigator.SceneConfigs.HorizontalSwipeJump}
-        sceneStyle={[styles.fill, styles.offsetFromTop]}
-      />
-    );
+  _compose = () => {
+    this.refs.nav.push({ id: 'compose', title: 'Compose' });
   }
 
 }
@@ -86,6 +98,9 @@ const styles = StyleSheet.create({
   },
   offsetFromTop: {
     marginTop: 64, // nav bar height
+  },
+  vert10: {
+    paddingVertical: 10,
   },
 });
 

@@ -31,29 +31,6 @@ class Inbox extends Component {
   }
 
   render(): Component {
-    return (
-      <View>
-        {this._renderCompose()}
-        {this._renderThreads()}
-      </View>
-    );
-  }
-
-  componentDidMount(): void {
-    this._reloadThreads();
-  }
-
-  _renderCompose(): Component {
-    return (
-      <View style={[styles.row, styles.end]}>
-        <TouchableHighlight style={{ width: 30 }} onPress={this._goToCompose}>
-          <Text>new</Text>
-        </TouchableHighlight>
-      </View>
-    );
-  }
-
-  _renderThreads(): Component {
     if (this.state.threads.length === 0) {
       return (
         <View style={[styles.fill, styles.cta]}>
@@ -74,8 +51,8 @@ class Inbox extends Component {
     );
   }
 
-  _goToCompose = () => {
-    this.props.nav.push({ id: 'compose', title: 'Compose' });
+  componentDidMount(): void {
+    this._reloadThreads();
   }
 
   _refresh = () => {
@@ -101,15 +78,9 @@ const styles = StyleSheet.create({
   fill: {
     flex: 1,
   },
-  row: {
-    flexDirection: 'row',
-  },
   cta: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  end: {
-    justifyContent: 'flex-end',
   },
   button: {
     alignSelf: 'center',
