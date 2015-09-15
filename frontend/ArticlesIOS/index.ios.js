@@ -5,6 +5,7 @@ const React = require('react-native');
 const {
   AppRegistry,
   Component,
+  Navigator,
   StyleSheet,
   Text,
   View,
@@ -14,11 +15,18 @@ const InboxIOS = require('./InboxIOS.ios');
 
 class ArticlesIOS extends Component {
 
+  _renderScene = (route: object, navigator: Navigator) => {
+    return (
+      <InboxIOS style={styles.container} />
+    );
+  }
+
   render(): Component {
     return (
-      <View style={styles.container}>
-        <InboxIOS />
-      </View>
+      <Navigator
+        initialRoute={{name: 'Inbox'}}
+        renderScene={this._renderScene}
+      />
     );
   }
 
