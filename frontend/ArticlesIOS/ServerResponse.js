@@ -8,8 +8,6 @@ const {
   PropTypes,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableHighlight,
   View,
 } = React;
 

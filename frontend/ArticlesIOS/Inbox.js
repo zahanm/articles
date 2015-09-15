@@ -14,13 +14,13 @@ const {
   View,
 } = React;
 
-const APIConst = require('./APIConst');
-const ThreadsListIOS = require('./ThreadsListIOS.ios');
+const APIConst = require('./APIConst.js');
+const ThreadsList = require('./ThreadsList.js');
 
 /**
  * Fetches and shows all threads you are a participant in
  */
-class InboxIOS extends Component {
+class Inbox extends Component {
 
   state = {
     threads: [],
@@ -59,7 +59,7 @@ class InboxIOS extends Component {
     }
     return (
       <View style={styles.fill}>
-        <ThreadsListIOS threads={this.state.threads} />
+        <ThreadsList threads={this.state.threads} />
       </View>
     );
   }
@@ -101,4 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = InboxIOS;
+module.exports = Inbox;

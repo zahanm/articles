@@ -12,7 +12,7 @@ const {
 } = React;
 
 const Compose = require('./Compose.js');
-const InboxIOS = require('./InboxIOS.ios');
+const Inbox = require('./Inbox.js');
 const ServerResponse = require('./ServerResponse.js');
 
 class ArticlesIOS extends Component {
@@ -20,7 +20,7 @@ class ArticlesIOS extends Component {
   _renderScene = (route: object, navigator: Navigator) => {
     switch (route.id) {
       case 'inbox':
-        return <InboxIOS nav={navigator} {...route} />;
+        return <Inbox nav={navigator} {...route} />;
       case 'response':
         return <ServerResponse nav={navigator} {...route} />;
       case 'compose':

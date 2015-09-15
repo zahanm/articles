@@ -13,7 +13,7 @@ const {
   View,
 } = React;
 
-const APIConst = require('./APIConst');
+const APIConst = require('./APIConst.js');
 
 class Compose extends Component {
 

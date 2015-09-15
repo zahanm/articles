@@ -10,9 +10,9 @@ const {
   View,
 } = React;
 
-const APIConst = require('./APIConst');
+const APIConst = require('./APIConst.js');
 
-class ThreadsListIOS extends Component {
+class ThreadsList extends Component {
 
   static propTypes = {
     threads: PropTypes.array.isRequired,
@@ -39,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = ThreadsListIOS;
+module.exports = ThreadsList;
