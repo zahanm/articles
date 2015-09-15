@@ -67,7 +67,7 @@ class ArticlesIOS extends Component {
     Title: function(route, navigator, index, navState) {
       return (
         <Text style={{ fontWeight: '500', marginVertical: 10 }}>
-          {route.title} [{index}]
+          {route.title}
         </Text>
       );
     },

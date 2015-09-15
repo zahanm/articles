@@ -29,16 +29,16 @@ class Compose extends Component {
     return (
       <View style={styles.fill}>
         <TextInput
-          style={[styles.bottomSpace, styles.noEdge, {
+          style={[styles.bottomSpace, styles.padAround, styles.noEdge, {
             backgroundColor: '#eee',
-            height: 20,
+            height: 40,
           }]}
           placeholder="Group Name"
           onChangeText={(groupname) => this.setState({ groupname })}
           value={this.state.groupname}
         />
         <TouchableHighlight
-          style={[styles.bottomSpace, styles.noEdge, styles.submitButton]}
+          style={[styles.bottomSpace, styles.padAround, styles.noEdge, styles.submitButton]}
           onPress={this._createThread}
         >
           <Text style={styles.submitButtonText}>Create</Text>
@@ -70,8 +70,10 @@ const styles = StyleSheet.create({
   fill: {
     flex: 1,
   },
-  bottomSpace: {
+  padAround: {
     padding: 5,
+  },
+  bottomSpace: {
     marginBottom: 20,
   },
   noEdge: {
