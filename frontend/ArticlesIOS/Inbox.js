@@ -33,13 +33,17 @@ class Inbox extends Component {
   render(): Component {
     return (
       <View style={styles.fill}>
-        {this.renderCompose()}
-        {this.renderThreads()}
+        {this._renderCompose()}
+        {this._renderThreads()}
       </View>
     );
   }
 
-  renderCompose(): Component {
+  componentDidMount(): void {
+    this._reloadThreads();
+  }
+
+  _renderCompose(): Component {
     return (
       <View style={[styles.row, styles.end]}>
         <TouchableHighlight style={{ width: 30 }} onPress={this._goToCompose}>
@@ -49,7 +53,7 @@ class Inbox extends Component {
     );
   }
 
-  renderThreads(): Component {
+  _renderThreads(): Component {
     if (this.state.threads.length === 0) {
       return (
         <View style={[styles.fill, styles.cta]}>
@@ -60,6 +64,12 @@ class Inbox extends Component {
     return (
       <View style={styles.fill}>
         <ThreadsList threads={this.state.threads} />
+        <TouchableHighlight
+          style={[styles.button]}
+          onPress={this._refresh}
+        >
+          <Text style={styles.buttonText}>Refresh</Text>
+        </TouchableHighlight>
       </View>
     );
   }
@@ -68,7 +78,12 @@ class Inbox extends Component {
     this.props.nav.push({ id: 'compose', title: 'Compose' });
   }
 
-  async componentDidMount(): Promise<void> {
+  _refresh = () => {
+    this.setState({ threads: [] }); // no threads currently
+    this._reloadThreads();
+  }
+
+  async _reloadThreads(): Promise<void> {
     const response = await fetch(`${APIConst.ENDPOINT}/threads`, {
       headers: APIConst.authenticatedHeaders(),
     });
@@ -95,6 +110,18 @@ const styles = StyleSheet.create({
   },
   end: {
     justifyContent: 'flex-end',
+  },
+  button: {
+    alignSelf: 'center',
+    width: 75,
+    padding: 5,
+    borderRadius: 10,
+    backgroundColor: 'green',
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '400',
+    textAlign: 'center',
   },
 });
 
