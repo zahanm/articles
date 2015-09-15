@@ -34,7 +34,6 @@ class ArticlesIOS extends Component {
   }
 
   _renderScene = (route: object, navigator: Navigator) => {
-    let content = null;
     switch (route.id) {
       case 'inbox':
         return <Inbox nav={navigator} {...route} />;
@@ -53,7 +52,7 @@ class ArticlesIOS extends Component {
         // first scene
         return null;
       }
-      var previous = navState.routeStack[index - 1];
+      const previous = navState.routeStack[index - 1];
       return (
         <TouchableOpacity onPress={() => navigator.pop()} >
           <Text style={[styles.vert10, { paddingLeft: 10 }]}>
