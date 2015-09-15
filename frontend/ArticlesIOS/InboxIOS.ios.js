@@ -79,7 +79,7 @@ class InboxIOS extends Component {
     const name = this.state.groupname;
     const headers = APIConst.authenticatedHeaders();
     headers.set('Content-Type', 'application/json');
-    let response = await fetch(`${APIConst.ENDPOINT}/thread`, {
+    const response = await fetch(`${APIConst.ENDPOINT}/thread`, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({ name }),
