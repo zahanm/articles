@@ -41,7 +41,7 @@ class Inbox extends Component {
 
   renderCompose(): Component {
     return (
-      <View style={[styles.offsetFromTop, styles.row, styles.end]}>
+      <View style={[styles.row, styles.end]}>
         <TouchableHighlight style={{ width: 30 }} onPress={this._goToCompose}>
           <Text>new</Text>
         </TouchableHighlight>
@@ -65,7 +65,7 @@ class Inbox extends Component {
   }
 
   _goToCompose = () => {
-    this.props.nav.push({ id: 'compose' });
+    this.props.nav.push({ id: 'compose', title: 'Compose' });
   }
 
   async componentDidMount(): Promise<void> {
@@ -85,9 +85,6 @@ class Inbox extends Component {
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
-  },
-  offsetFromTop: {
-    marginTop: 20,
   },
   row: {
     flexDirection: 'row',

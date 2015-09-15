@@ -27,7 +27,7 @@ class Compose extends Component {
 
   render(): Component {
     return (
-      <View style={[styles.fill, styles.offsetFromTop]}>
+      <View style={styles.fill}>
         <TextInput
           style={[styles.bottomSpace, styles.noEdge, {
             backgroundColor: '#eee',
@@ -57,11 +57,11 @@ class Compose extends Component {
       body: JSON.stringify({ name }),
     });
     if (!response.ok) {
-      this.props.nav.push({ id: 'response', status: response.status });
+      this.props.nav.push({ id: 'response', title: 'Response', status: response.status });
       return;
     }
     // all okay. temporarily show status
-    this.props.nav.push({ id: 'response', status: response.status });
+    this.props.nav.push({ id: 'response', title: 'Response', status: response.status });
   }
 
 }
@@ -69,9 +69,6 @@ class Compose extends Component {
 const styles = StyleSheet.create({
   fill: {
     flex: 1,
-  },
-  offsetFromTop: {
-    marginTop: 24,
   },
   bottomSpace: {
     padding: 5,
