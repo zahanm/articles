@@ -1,8 +1,8 @@
 
 'use strict';
 
-let React = require('react-native');
-let {
+const React = require('react-native');
+const {
   ActivityIndicatorIOS,
   Component,
   Navigator,
@@ -14,8 +14,8 @@ let {
   View,
 } = React;
 
-let APIConst = require('./APIConst.js');
-let ThreadsList = require('./ThreadsList.js');
+const APIConst = require('./APIConst.js');
+const ThreadsList = require('./ThreadsList.js');
 
 /**
  * Fetches and shows all threads you are a participant in
@@ -61,20 +61,20 @@ class Inbox extends Component {
   }
 
   async _reloadThreads(): Promise<void> {
-    let response = await fetch(`${APIConst.ENDPOINT}/threads`, {
+    const response = await fetch(`${APIConst.ENDPOINT}/threads`, {
       headers: APIConst.authenticatedHeaders(),
     });
     if (!response.ok) {
       this.props.nav.push({ id: 'response', status: response.status });
       return;
     }
-    let threads = await response.json();
+    const threads = await response.json();
     this.setState({ threads });
   }
 
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   fill: {
     flex: 1,
   },

@@ -1,8 +1,8 @@
 
 'use strict';
 
-let React = require('react-native');
-let {
+const React = require('react-native');
+const {
   Component,
   Navigator,
   PropTypes,
@@ -13,7 +13,7 @@ let {
   View,
 } = React;
 
-let APIConst = require('./APIConst.js');
+const APIConst = require('./APIConst.js');
 
 class Compose extends Component {
 
@@ -48,10 +48,10 @@ class Compose extends Component {
   }
 
   _createThread = async () => {
-    let name = this.state.groupname;
-    let headers = APIConst.authenticatedHeaders();
+    const name = this.state.groupname;
+    const headers = APIConst.authenticatedHeaders();
     headers.set('Content-Type', 'application/json');
-    let response = await fetch(`${APIConst.ENDPOINT}/thread`, {
+    const response = await fetch(`${APIConst.ENDPOINT}/thread`, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify({ name }),
@@ -66,7 +66,7 @@ class Compose extends Component {
 
 }
 
-let styles = StyleSheet.create({
+const styles = StyleSheet.create({
   padAround: {
     padding: 5,
   },

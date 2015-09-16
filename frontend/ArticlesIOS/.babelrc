@@ -1,6 +1,6 @@
 {
   "whitelist": [
-    "strict",
+    "es6.constants",
     "es7.classProperties",
   ]
 }
