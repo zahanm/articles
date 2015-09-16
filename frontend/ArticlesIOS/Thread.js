@@ -42,11 +42,7 @@ class Thread extends Component {
   }
 
   componentDidMount(): void {
-    try {
-      this._loadThread();
-    } catch (err) {
-      throw err;
-    }
+    this._loadThread().catch((err) => console.error(err));
   }
 
   async _loadThread(): Promise<void> {

@@ -89,8 +89,8 @@ class ArticlesIOS extends Component {
   }
 
   _compose = () => {
-    this.refs.nav.push({ id: 'thread', title: 'Articles', threadID: '55ef0f2ffc4a30c27d2242d5' });
-    // this.refs.nav.push({ id: 'compose', title: 'Compose' });
+    // this.refs.nav.push({ id: 'thread', title: 'Articles', threadID: '55ef0f2ffc4a30c27d2242d5' });
+    this.refs.nav.push({ id: 'compose', title: 'Compose' });
   }
 
 }

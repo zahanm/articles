@@ -52,12 +52,12 @@ class Inbox extends Component {
   }
 
   componentDidMount(): void {
-    this._reloadThreads();
+    this._reloadThreads().catch((err) => console.error(err));
   }
 
   _refresh = () => {
     this.setState({ threads: [] }); // no threads currently
-    this._reloadThreads();
+    this._reloadThreads().catch((err) => console.error(err));
   }
 
   async _reloadThreads(): Promise<void> {
