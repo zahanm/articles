@@ -14,6 +14,7 @@ const {
 
 const Compose = require('./Compose.js');
 const Inbox = require('./Inbox.js');
+const Thread = require('./Thread.js');
 const ServerResponse = require('./ServerResponse.js');
 
 class ArticlesIOS extends Component {
@@ -41,6 +42,8 @@ class ArticlesIOS extends Component {
         return <ServerResponse nav={navigator} {...route} />;
       case 'compose':
         return <Compose nav={navigator} {...route} />;
+      case 'thread':
+        return <Thread nav={navigator} {...route} />;
       default:
         throw new Error('no scene given');
     }
@@ -86,7 +89,8 @@ class ArticlesIOS extends Component {
   }
 
   _compose = () => {
-    this.refs.nav.push({ id: 'compose', title: 'Compose' });
+    this.refs.nav.push({ id: 'thread', title: 'Articles', threadID: '55ef0f2ffc4a30c27d2242d5' });
+    // this.refs.nav.push({ id: 'compose', title: 'Compose' });
   }
 
 }
