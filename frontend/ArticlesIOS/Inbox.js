@@ -27,11 +27,11 @@ class Inbox extends Component {
   }
 
   state = {
-    threads: [],
+    threads: null,
   }
 
   render(): Component {
-    if (this.state.threads.length === 0) {
+    if (this.state.threads === null) {
       return (
         <View style={[styles.fill, styles.cta]}>
           <ActivityIndicatorIOS animating={true} />
