@@ -52,6 +52,17 @@ router.get('/threads', function *(next) {
   this.body = threads;
 });
 
+router.get('/thread', function *(next) {
+  this.assert(this.user, 401, 'need to be authenticated');
+  this.assert(nonEmptyString(this.request.query.id), 400, 'need an ID');
+  const t = yield Thread.findById(this.request.query.id).exec();
+  if (!t) {
+    this.status = 404;
+    return;
+  }
+  this.body = t;
+});
+
 router.post('/thread', function *(next) {
   this.assert(this.user, 401, 'need to be authenticated');
   this.assert(nonEmptyString(this.request.body.name), 400, 'need a name');

@@ -46,7 +46,16 @@ class Thread extends Component {
   }
 
   async _loadThread(): Promise<void> {
-    throw new Error('testing');
+    const qs = `id=${this.props.threadID}`;
+    const response = await fetch(`${APIConst.ENDPOINT}/thread?${qs}`, {
+      headers: APIConst.authenticatedHeaders(),
+    });
+    if (!response.ok) {
+      this.props.nav.push({ id: 'response', status: response.status });
+      return;
+    }
+    const thread = await response.json();
+    this.setState({ thread });
   }
 
 }

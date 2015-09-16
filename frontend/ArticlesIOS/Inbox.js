@@ -40,7 +40,7 @@ class Inbox extends Component {
     }
     return (
       <View style={styles.fill}>
-        <ThreadsList threads={this.state.threads} />
+        <ThreadsList nav={this.props.nav} threads={this.state.threads} />
         <TouchableHighlight
           style={[styles.button]}
           onPress={this._refresh}

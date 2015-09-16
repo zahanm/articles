@@ -51,7 +51,7 @@ class Compose extends Component {
     this._createThreadImpl().catch((err) => console.error(err));
   }
 
-  async _createThreadImpl() {
+  async _createThreadImpl(): Promise<void> {
     const name = this.state.groupname;
     const headers = APIConst.authenticatedHeaders();
     headers.set('Content-Type', 'application/json');
