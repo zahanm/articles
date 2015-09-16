@@ -11,6 +11,7 @@ const {
   Text,
   TextInput,
   TouchableHighlight,
+  TouchableOpacity,
   View,
 } = React;
 
@@ -55,6 +56,17 @@ class Inbox extends Component {
     this._reloadThreads().catch((err) => console.error(err));
   }
 
+  static compose(nav: Navigator): Component {
+    return (
+      <TouchableOpacity
+        style={[styles.vert10, { paddingRight: 10 }]}
+        onPress={() => nav.push({ id: 'compose', title: 'Compose' })}
+      >
+        <Text>new</Text>
+      </TouchableOpacity>
+    );
+  }
+
   _refresh = () => {
     this.setState({ threads: [] }); // no threads currently
     this._reloadThreads().catch((err) => console.error(err));
@@ -93,6 +105,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: '400',
     textAlign: 'center',
+  },
+  vert10: {
+    paddingVertical: 10,
   },
 });
 

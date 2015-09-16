@@ -66,15 +66,8 @@ class ArticlesIOS extends Component {
     },
 
     RightButton: (route, navigator, index, navState) => {
-      const composeButton =
-        <TouchableOpacity
-          style={[styles.vert10, { paddingRight: 10 }]}
-          onPress={this._compose}
-        >
-          <Text>new</Text>
-        </TouchableOpacity>;
       switch (route.id) {
-        case 'inbox': return composeButton;
+        case 'inbox': return Inbox.compose(navigator);
       }
       return null;
     },
@@ -86,10 +79,6 @@ class ArticlesIOS extends Component {
         </Text>
       );
     },
-  }
-
-  _compose = () => {
-    this.refs.nav.push({ id: 'compose', title: 'Compose' });
   }
 
 }
