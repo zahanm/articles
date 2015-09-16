@@ -22,12 +22,12 @@ const ThreadsList = require('./ThreadsList.js');
  */
 class Inbox extends Component {
 
-  state = {
-    threads: [],
-  }
-
   static propTypes = {
     nav: PropTypes.instanceOf(Navigator).isRequired,
+  }
+
+  state = {
+    threads: [],
   }
 
   render(): Component {
