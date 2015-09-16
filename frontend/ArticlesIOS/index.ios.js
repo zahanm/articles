@@ -1,8 +1,8 @@
 
 'use strict';
 
-const React = require('react-native');
-const {
+let React = require('react-native');
+let {
   AppRegistry,
   Component,
   Navigator,
@@ -12,10 +12,10 @@ const {
   View,
 } = React;
 
-const Compose = require('./Compose.js');
-const Inbox = require('./Inbox.js');
-const Thread = require('./Thread.js');
-const ServerResponse = require('./ServerResponse.js');
+let Compose = require('./Compose.js');
+let Inbox = require('./Inbox.js');
+let Thread = require('./Thread.js');
+let ServerResponse = require('./ServerResponse.js');
 
 class ArticlesIOS extends Component {
 
@@ -55,7 +55,7 @@ class ArticlesIOS extends Component {
         // first scene
         return null;
       }
-      const previous = navState.routeStack[index - 1];
+      let previous = navState.routeStack[index - 1];
       return (
         <TouchableOpacity onPress={() => navigator.pop()} >
           <Text style={[styles.vert10, { paddingLeft: 10 }]}>
@@ -66,7 +66,7 @@ class ArticlesIOS extends Component {
     },
 
     RightButton: (route, navigator, index, navState) => {
-      const composeButton =
+      let composeButton =
         <TouchableOpacity
           style={[styles.vert10, { paddingRight: 10 }]}
           onPress={this._compose}
@@ -95,7 +95,7 @@ class ArticlesIOS extends Component {
 
 }
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
   fill: {
     flex: 1,
   },

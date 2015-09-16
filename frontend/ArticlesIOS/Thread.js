@@ -1,8 +1,8 @@
 
 'use strict';
 
-const React = require('react-native');
-const {
+let React = require('react-native');
+let {
   ActivityIndicatorIOS,
   Component,
   Navigator,
@@ -12,8 +12,8 @@ const {
   View,
 } = React;
 
-const APIConst = require('./APIConst.js');
-const ThreadsList = require('./ThreadsList.js');
+let APIConst = require('./APIConst.js');
+let ThreadsList = require('./ThreadsList.js');
 
 class Thread extends Component {
 
@@ -55,7 +55,7 @@ class Thread extends Component {
 
 }
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
   fill: {
     flex: 1,
   },

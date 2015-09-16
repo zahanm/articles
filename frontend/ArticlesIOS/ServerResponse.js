@@ -1,8 +1,8 @@
 
 'use strict';
 
-const React = require('react-native');
-const {
+let React = require('react-native');
+let {
   Component,
   Navigator,
   PropTypes,
@@ -28,7 +28,7 @@ class ServerResponse extends Component {
 
 }
 
-const styles = StyleSheet.create({
+let styles = StyleSheet.create({
   cta: {
     justifyContent: 'center',
     alignItems: 'center',
