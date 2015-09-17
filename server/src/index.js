@@ -5,6 +5,7 @@ const koa = require('koa');
 const bodyParser = require('koa-bodyparser');
 const router = require('koa-router')();
 const mongoose = require('mongoose');
+const gutil = require('gulp-util');
 
 mongoose.connect('mongodb://localhost/articles');
 const app = koa();
@@ -13,6 +14,11 @@ import { Thread, Link, User } from './models';
 import { nonEmptyString } from './utils';
 
 app.use(bodyParser());
+
+router.use(function *(next) {
+  yield next;
+  gutil.log(this.request.url, gutil.colors.cyan(this.response.status));
+});
 
 router.use(function *(next) {
   if (!this.request.headers.alias) {
@@ -124,5 +130,5 @@ const server = app.listen(8000, () => {
   const host = server.address().address;
   const port = server.address().port;
 
-  console.log(`"ArticlesAPI" listening at http://${host}:${port}`);
+  gutil.log(`"ArticlesAPI" listening at http://${host}:${port}`);
 });
