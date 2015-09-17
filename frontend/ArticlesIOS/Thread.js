@@ -24,6 +24,7 @@ class Thread extends Component {
 
   state = {
     thread: null,
+    links: null,
   }
 
   render(): Component {
@@ -34,12 +35,37 @@ class Thread extends Component {
         </View>
       );
     }
-    const links = this.state.thread.contents.map((l) => {
-      return <Text key={l}>{l}</Text>;
+    const links = this.state.links.map((l) => {
+      return <Text key={l._id}>{l.url}</Text>;
     });
     return (
       <View>
-        <Text>{this.state.thread.name}</Text>
+        {this._renderHeader()}
+        {this._renderLinks()}
+      </View>
+    );
+  }
+
+  _renderHeader(): Component {
+    return (
+      <View style={{ alignItems: 'center' }}>
+        <Text style={{ textAlign: 'center', fontWeight: 400 }}>
+          {this.state.thread.name}
+        </Text>
+      </View>
+    );
+  }
+
+  _renderLinks(): Component {
+    const links = this.state.links.map((l) => {
+      return (
+        <Text style={styles.link} key={l._id} style={{ paddingVertical: 5 }}>
+          {l.url}
+        </Text>
+      );
+    });
+    return (
+      <View style={{ paddingHorizontal: 10 }}>
         {links}
       </View>
     );
@@ -59,7 +85,16 @@ class Thread extends Component {
       return;
     }
     const thread = await response.json();
-    this.setState({ thread });
+    const links = [];
+    for (let linkID of thread.contents) {
+      const qs = `id=${linkID}`
+      const response = await fetch(`${APIConst.ENDPOINT}/link?${qs}`, {
+        headers: APIConst.authenticatedHeaders(),
+      });
+      const link = await response.json();
+      links.push(link);
+    }
+    this.setState({ thread, links });
   }
 
 }
