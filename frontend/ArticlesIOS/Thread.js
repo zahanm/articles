@@ -35,9 +35,6 @@ class Thread extends Component {
         </View>
       );
     }
-    const links = this.state.links.map((l) => {
-      return <Text key={l._id}>{l.url}</Text>;
-    });
     return (
       <View>
         {this._renderHeader()}
