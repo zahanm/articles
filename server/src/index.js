@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/articles');
 const app = koa();
 
-import { User, Thread } from './models';
+import { Thread, User } from './models';
 import { nonEmptyString } from './utils';
 
 app.use(bodyParser());
@@ -73,6 +73,18 @@ router.post('/thread', function *(next) {
   yield t.save();
   this.status = 201;
   this.body = t;
+});
+
+router.get('/links', function *(next) {
+  this.assert(this.user, 401, 'need to be authenticated');
+  this.assert(nonEmptyString(this.request.query.id), 400, 'need a thread ID');
+  const t =
+    yield Thread.findById(this.request.query.id, { contents: true }).exec();
+  if (!t) {
+    this.status = 404;
+    return;
+  }
+  this.body = t.contents;
 });
 
 app.use(router.routes());

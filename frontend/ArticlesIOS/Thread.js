@@ -34,9 +34,13 @@ class Thread extends Component {
         </View>
       );
     }
+    const links = this.state.thread.contents.map((l) => {
+      return <Text key={l}>{l}</Text>;
+    });
     return (
-      <View style={[styles.fill, styles.cta]}>
+      <View>
         <Text>{this.state.thread.name}</Text>
+        {links}
       </View>
     );
   }
