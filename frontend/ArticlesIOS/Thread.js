@@ -13,7 +13,7 @@ const {
 } = React;
 
 const APIConst = require('./APIConst.js');
-const ThreadsList = require('./ThreadsList.js');
+const LinksList = require('./LinksList.js');
 
 class Thread extends Component {
 
@@ -24,7 +24,7 @@ class Thread extends Component {
 
   state = {
     thread: null,
-    links: null,
+    linkIDs: null,
   }
 
   render(): Component {
@@ -58,18 +58,7 @@ class Thread extends Component {
   }
 
   _renderLinks(): Component {
-    const links = this.state.links.map((l) => {
-      return (
-        <Text style={styles.link} key={l._id} style={{ paddingVertical: 5 }}>
-          {l.url}
-        </Text>
-      );
-    });
-    return (
-      <View style={{ paddingHorizontal: 10 }}>
-        {links}
-      </View>
-    );
+    return <LinksList linkIDs={this.state.linkIDs} />;
   }
 
   async _loadThread(): Promise<void> {
@@ -82,16 +71,8 @@ class Thread extends Component {
       return;
     }
     const thread = await response.json();
-    const links = [];
-    for (let linkID of thread.contents) {
-      const qs = `id=${linkID}`
-      const response = await fetch(`${APIConst.ENDPOINT}/link?${qs}`, {
-        headers: APIConst.authenticatedHeaders(),
-      });
-      const link = await response.json();
-      links.push(link);
-    }
-    this.setState({ thread, links });
+    const linkIDs = thread.contents;
+    this.setState({ thread, linkIDs });
   }
 
 }
