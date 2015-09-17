@@ -43,6 +43,10 @@ class Thread extends Component {
     );
   }
 
+  componentDidMount(): void {
+    this._loadThread().catch((err) => console.error(err));
+  }
+
   _renderHeader(): Component {
     return (
       <View style={{ alignItems: 'center' }}>
@@ -66,10 +70,6 @@ class Thread extends Component {
         {links}
       </View>
     );
-  }
-
-  componentDidMount(): void {
-    this._loadThread().catch((err) => console.error(err));
   }
 
   async _loadThread(): Promise<void> {
