@@ -17,7 +17,11 @@ app.use(bodyParser());
 
 router.use(function *(next) {
   yield next;
-  gutil.log(this.request.url, gutil.colors.cyan(this.response.status));
+  gutil.log(
+    gutil.colors.green(this.request.method),
+    this.request.url,
+    gutil.colors.yellow(this.response.status)
+  );
 });
 
 router.use(function *(next) {

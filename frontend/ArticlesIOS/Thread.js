@@ -49,7 +49,7 @@ class Thread extends Component {
   _renderHeader(): Component {
     return (
       <View style={{ alignItems: 'center' }}>
-        <Text style={{ textAlign: 'center', fontWeight: 400 }}>
+        <Text style={{ textAlign: 'center', fontWeight: '500' }}>
           {this.state.thread.name}
         </Text>
       </View>
