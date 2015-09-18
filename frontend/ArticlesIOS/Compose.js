@@ -78,8 +78,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   noEdge: {
-    marginLeft: 10,
-    marginRight: 10,
+    marginHorizontal: 10,
   },
   submitButton: {
     backgroundColor: 'blue',

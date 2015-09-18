@@ -112,18 +112,17 @@ router.post('/link', function *(next) {
   this.assert(this.user, 401, 'need to be authenticated');
   this.assert(nonEmptyString(this.request.body.id), 400, 'need a thread ID');
   this.assert(nonEmptyString(this.request.body.url), 400, 'need a URL');
+  this.assert(nonEmptyString(this.request.body.text), 400, 'need text');
   const t = yield Thread.findById(this.request.body.id).exec();
   if (!t) {
     this.throw(400, 'need a valid thread ID');
   }
-  let link = yield Link.findOne({ url: this.request.body.url }).exec();
-  if (!link) {
-    link = new Link({
-      url: this.request.body.url,
-    });
-    yield link.save();
-  }
-  t.contents.push(link._id);
+  const l = new Link({
+    url: this.request.body.url,
+    text: this.request.body.text,
+  });
+  yield l.save();
+  t.contents.push(l._id);
   yield t.save();
   this.status = 201;
 });

@@ -9,11 +9,12 @@ export const User = mongoose.model('User', new Schema({
 }));
 
 export const Link = mongoose.model('Link', new Schema({
-  url: { type: String, index: true, required: true, unique: true },
+  url: { type: String, index: true, required: true, unique: false },
+  text: String,
 }));
 
 export const Thread = mongoose.model('Thread', new Schema({
   participants: [{ type: Schema.Types.ObjectId, ref: 'User', index: true }],
-  contents: [{ type: Schema.Types.ObjectId, ref: 'Link' }],
+  contents: [{ type: Schema.Types.ObjectId, ref: 'Message' }],
   name: String,
 }));

@@ -33,9 +33,14 @@ class LinksList extends Component {
     }
     const links = this.state.links.map((l) => {
       return (
-        <Text style={styles.link} key={l._id} style={{ paddingVertical: 5 }}>
-          {l.url}
-        </Text>
+        <View key={l._id} style={{ paddingVertical: 5 }}>
+          <Text style={{ paddingVertical: 5 }}>
+            {l.text}
+          </Text>
+          <Text style={{ paddingVertical: 5, color: 'blue' }}>
+            {l.url}
+          </Text>
+        </View>
       );
     });
     return (
