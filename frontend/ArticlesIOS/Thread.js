@@ -14,6 +14,7 @@ const {
 
 const APIConst = require('./APIConst.js');
 const LinksList = require('./LinksList.js');
+const Share = require('./Share.js');
 
 class Thread extends Component {
 
@@ -36,8 +37,9 @@ class Thread extends Component {
       );
     }
     return (
-      <View>
+      <View style={styles.fill}>
         {this._renderHeader()}
+        {this._renderSharer()}
         {this._renderLinks()}
       </View>
     );
@@ -55,6 +57,10 @@ class Thread extends Component {
         </Text>
       </View>
     );
+  }
+
+  _renderSharer(): Component {
+    return <Share nav={this.props.nav} threadID={this.props.threadID} />;
   }
 
   _renderLinks(): Component {

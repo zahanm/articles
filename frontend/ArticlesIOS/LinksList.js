@@ -51,7 +51,7 @@ class LinksList extends Component {
       );
     });
     return (
-      <View style={{ paddingHorizontal: 10 }}>
+      <View style={[styles.fill, { paddingHorizontal: 10 }]}>
         {links}
       </View>
     );
