@@ -31,6 +31,13 @@ class LinksList extends Component {
         </View>
       );
     }
+    if (this.state.links.length === 0) {
+      return (
+        <View style={[styles.fill, styles.cta]}>
+          <Text>No links</Text>
+        </View>
+      );
+    }
     const links = this.state.links.map((l) => {
       return (
         <View key={l._id} style={{ paddingVertical: 5 }}>
