@@ -96,10 +96,10 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'center',
-    width: 75,
-    padding: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderRadius: 10,
-    backgroundColor: 'green',
+    backgroundColor: 'blue',
   },
   buttonText: {
     color: 'white',
